@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+		<script src="sweetalert/dist/sweetalert.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="sweetalert/dist/sweetalert.css">
+	</head>
+
+	<body>
+	
+	<h1>Security 2 Danny van der Biezen en Erik Brandsma</h1> <br>
+
+	<form class="jumbotron">
+		<legend>Geheim onthullen</legend>
+		<p><input style="margin-left:10px;" placeholder="Naam" type="text" name="Name" id="name"/></p>
+		<p><input style="margin-left:10px;" placeholder="Wachtwoord" type="text" name="Name" id="ww"/></p>
+	</form>
+	</body>
+	<p>
+		<input class="btn btn-primary" type="submit" id="submit"/>
+	</p>
+	<p>
+		<a class="btn btn-default" href="index.html">Naar geheim opslaan</a>
+	</p>
+</html>
+
+<script type="text/javascript">
+	
+	$("#submit").on("click", function(){
+
+		var naam = $("#name").val();
+		var ww = $("#ww").val();
+		var encrypted = localStorage.getItem("message");
+
+
+		var decrypted = CryptoJS.AES.decrypt(encrypted, naam + ww);
+		var decryptedString = decrypted.toString(CryptoJS.enc.Utf8);
+		if(decryptedString == ""){
+			swal({title: "Oeps", text: "Je geheim kan niet uitgelezen worden.. heb je je geheim goed opgeslagen?", type: "error", confirmButtonText: "Meh"});
+		} else {
+			swal("Je geheim is:", decryptedString, "success")
+		}
+	});
+
+</script>

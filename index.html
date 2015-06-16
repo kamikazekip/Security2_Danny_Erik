@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Security 2</title>
+		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+		<script src="sweetalert/dist/sweetalert.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="sweetalert/dist/sweetalert.css">
+	</head>
+
+	<body>
+
+		<h1>Security 2 Danny van der Biezen en Erik Brandsma</h1> <br>
+
+		
+		<br>
+
+		<form class="jumbotron">
+		  	<h1>Geheim opslaan</h1>
+		  	<p><input style="margin-left:10px;" placeholder="Naam" type="text" name="Name" id="name"/></p>
+			<p><input style="margin-left:10px;" placeholder="Wachtwoord" type="text" name="Ww" id="ww"/></p>
+			<p><textarea style="margin-left:10px;" placeholder="Geheime text" id="text"></textarea></p>
+			
+		</form>
+	</body>
+	<p>
+		<input class="btn btn-primary" type="submit" id="submit"/>
+	</p>
+	<p>
+		<a href="decrypt.html" class="btn btn-default">Naar geheim onthullen</a>
+	</p>
+	
+</html>
+
+<script type="text/javascript">
+	
+	$("#submit").on("click", function(){
+		var naam = $("#name").val();
+		var text = $("#text").val();
+		var ww = $("#ww").val();
+		var encrypted = CryptoJS.AES.encrypt(text, naam + ww);
+		localStorage.setItem("message", encrypted);	
+		swal({   title: "Gelukt!",  
+				 text: "Je message is encrypted",   
+				 type: "success",   
+				 showCancelButton: true,   
+				 confirmButtonColor: "magenta",   
+				 confirmButtonText: "Ga naar geheim onthullen",   
+				 cancelButtonText: "Cool", 
+				 closeOnConfirm: false,   
+				 closeOnCancel: false }, function(isConfirm){   
+				 	if (isConfirm) {    
+				 	  window.location =  "decrypt.html";
+				 	}
+		});
+	});
+
+</script>
